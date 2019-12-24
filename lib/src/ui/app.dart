@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
           create: (context) => FactListBloc()..add(GetFactListEvent())
         ),
         BlocProvider<RandomImageBloc>(
-          create: (context) => RandomImageBloc(),
+          create: (context) => RandomImageBloc()..add(GetRandomImageEvent()),
         ),
       ],
       child: MaterialApp(
