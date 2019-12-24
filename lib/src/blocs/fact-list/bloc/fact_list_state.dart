@@ -6,7 +6,7 @@ abstract class FactListState {}
   
 class InitialFactListState extends FactListState {}
 
-class LaodingFactListState extends FactListState {}
+class LoadingFactListState extends FactListState {}
 
 class LoadedFactListState extends FactListState {
   final HttpResponse response;

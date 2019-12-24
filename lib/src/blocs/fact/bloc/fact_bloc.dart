@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:flutter_cat_facts/src/models/fact_model.dart';
 import './bloc.dart';
 
 class FactBloc extends Bloc<FactEvent, FactState> {
@@ -8,6 +9,10 @@ class FactBloc extends Bloc<FactEvent, FactState> {
 
   @override
   Stream<FactState> mapEventToState(FactEvent event) async* {
-    // TODO: Add Logic
+    yield LoadingFactState();
+    if (event is GetFactEvent) {
+      final Fact fact = null;
+      yield LoadedFactState(fact);
+    }
   }
 }

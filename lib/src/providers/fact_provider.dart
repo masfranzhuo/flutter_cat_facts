@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_cat_facts/src/configs/api.dart';
 import 'package:flutter_cat_facts/src/models/fact_model.dart';
+import 'package:flutter_cat_facts/src/utils/http_response.dart';
 
 class FactProvider {
   static const String providerName = 'facts';
@@ -12,18 +13,18 @@ class FactProvider {
   );
   Dio dio = new Dio(options);
 
-  Future<List<Fact>> fetchFacts() async {
+  Future<HttpResponse> fetchFacts() async {
     try {
       Response response = await dio.get(providerName);
 
-      List result = response.data as List;
+      List result = response.data['all'] as List;
       List<Fact> facts = result.isNotEmpty
           ? result.map((item) => Fact.fromJson(item)).toList()
           : [];
-          
-      return facts;
+
+      return HttpResponse(isSuccess: true, data: facts);
     } catch (error) {
-      throw (error);
+      return HttpResponse(message: error);
     }
   }
 }
