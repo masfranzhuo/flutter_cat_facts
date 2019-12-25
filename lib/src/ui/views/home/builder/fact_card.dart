@@ -7,8 +7,13 @@ class FactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Text(text ?? ''),
+    return Text(
+      text ?? '',
+      style: TextStyle(
+        color: Colors.black87,
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
+      ),
     );
   }
 }
