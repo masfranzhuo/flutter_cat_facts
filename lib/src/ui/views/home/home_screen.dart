@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cat_facts/src/blocs/fact-list/bloc/bloc.dart';
 import 'package:flutter_cat_facts/src/blocs/fact/bloc/bloc.dart';
 import 'package:flutter_cat_facts/src/blocs/random-image/bloc/bloc.dart';
 import 'package:flutter_cat_facts/src/models/random_image_model.dart';
