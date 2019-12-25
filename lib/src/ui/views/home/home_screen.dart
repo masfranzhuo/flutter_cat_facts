@@ -14,23 +14,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool initValue = true;
-
+  
   void _handlerShare() {}
 
   void _handlerNext() {
     BlocProvider.of<RandomImageBloc>(context).add(GetRandomImageEvent());
     BlocProvider.of<FactBloc>(context).add(GetFactEvent());
-  }
-
-  @override
-  void initState() {
-    if (initValue) {
-      setState(() {
-        initValue = false;
-      });
-    }
-    super.initState();
   }
 
   @override
