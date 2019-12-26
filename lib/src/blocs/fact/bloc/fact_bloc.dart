@@ -15,7 +15,7 @@ class FactBloc extends Bloc<FactEvent, FactState> {
   FactBloc({this.factListBloc}) {
     factListSubscription = factListBloc.listen((state) {
       if (state is LoadedFactListState) {
-        _facts = state.response.data;
+        _facts = state.facts;
         add(GetFactEvent());
       }
     });
