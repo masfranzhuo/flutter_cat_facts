@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.amber,
+          accentColor: Colors.black87,
         ),
         home: HomeScreen(),
       ),

@@ -10,9 +10,9 @@ class FactCard extends StatelessWidget {
     return Text(
       text ?? '',
       style: TextStyle(
-        color: Colors.black87,
+        color: Theme.of(context).accentColor,
         fontWeight: FontWeight.bold,
-        fontSize: 18,
+        fontSize: 16,
       ),
     );
   }

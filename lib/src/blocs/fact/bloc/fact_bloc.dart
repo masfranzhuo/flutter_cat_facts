@@ -10,6 +10,7 @@ class FactBloc extends Bloc<FactEvent, FactState> {
   StreamSubscription factListSubscription;
   Random random = Random();
   List<Fact> _facts;
+  Fact _fact;
 
   FactBloc({this.factListBloc}) {
     factListSubscription = factListBloc.listen((state) {
@@ -19,6 +20,8 @@ class FactBloc extends Bloc<FactEvent, FactState> {
       }
     });
   }
+
+  get fact => _fact;
 
   @override
   FactState get initialState => InitialFactState();
@@ -35,6 +38,7 @@ class FactBloc extends Bloc<FactEvent, FactState> {
     if (event is GetFactEvent) {
       final int maxIndex = _facts.length;
       final Fact fact = _facts[random.nextInt(maxIndex)];
+      _fact = fact;
       yield LoadedFactState(fact);
     }
   }
