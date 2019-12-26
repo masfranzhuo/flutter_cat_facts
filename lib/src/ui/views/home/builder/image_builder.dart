@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cat_facts/src/ui/core/style/box_decoration.dart';
+import 'package:flutter_cat_facts/src/ui/core/style/image_widget.dart';
 
 class ImageCard extends StatelessWidget {
   final String imageUrl;
@@ -32,11 +33,11 @@ class ImageCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         child: Container(
           color: Colors.blueGrey,
-          child: Image.network(
-            imageUrl,
+          child: ImageNetwork(
+            imageUrl: imageUrl,
             width: sizeWidth,
             height: sizeHeight,
-            fit: boxFit,
+            boxFit: boxFit,
           ),
         ),
       ),

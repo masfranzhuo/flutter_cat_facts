@@ -5,13 +5,13 @@ import 'package:flutter_cat_facts/src/blocs/random-image/bloc/bloc.dart';
 import 'package:flutter_cat_facts/src/models/fact_model.dart';
 import 'package:flutter_cat_facts/src/models/random_image_model.dart';
 import 'package:flutter_cat_facts/src/ui/core/button_widget.dart';
-import 'package:flutter_cat_facts/src/ui/core/loading_indicator_widget.dart';
+import 'package:flutter_cat_facts/src/ui/core/spinkit_widget.dart';
 import 'package:flutter_cat_facts/src/ui/core/style/box_decoration.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:share/share.dart';
 
-import 'builder/fact_card.dart';
-import 'builder/image_card.dart';
+import 'builder/fact_builder.dart';
+import 'builder/image_builder.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -57,28 +57,30 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) => Dialog(
-            child: Stack(
-              children: <Widget>[
-                ImageCard(
-                  imageUrl: imageUrl,
-                  width: width,
-                  height: height,
-                  boxFit: BoxFit.contain,
-                  fullScreen: true,
-                ),
-                Positioned(
-                  bottom: 12,
-                  right: 12,
-                  child: Button(
-                    icon: Icons.file_download,
-                    onPressed: () {
-                      _handlerDownload(setState, imageUrl);
-                    },
-                    tooltip: 'Download Image',
-                    isLoading: isDownloading,
+            child: Center(
+              child: Stack(
+                children: <Widget>[
+                  ImageCard(
+                    imageUrl: imageUrl,
+                    width: width,
+                    height: height,
+                    boxFit: BoxFit.contain,
+                    fullScreen: true,
                   ),
-                ),
-              ],
+                  Positioned(
+                    bottom: 12,
+                    right: 12,
+                    child: Button(
+                      icon: Icons.file_download,
+                      onPressed: () {
+                        _handlerDownload(setState, imageUrl);
+                      },
+                      tooltip: 'Download Image',
+                      isLoading: isDownloading,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -121,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     } else
-                      return LoadingIndicator();
+                      return Spinkit();
                   },
                 ),
                 SizedBox(height: 30),
@@ -155,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               if (state is LoadedFactState) {
                                 return FactCard(text: state.fact.text);
                               } else
-                                return LoadingIndicator();
+                                return Spinkit();
                             },
                           ),
                           SizedBox(height: 10),
