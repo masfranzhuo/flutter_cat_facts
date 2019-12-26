@@ -51,8 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showFulllScreenImageDialog(
-      {@required String imageUrl, double width, double height}) {
-    showDialog(
+      {@required String imageUrl, double width, double height}) async {
+    await showDialog(
       context: context,
       builder: (context) {
         return StatefulBuilder(
@@ -85,6 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       },
+    ).then(
+      (_) => setState(() {
+        isDownloading = false;
+      }),
     );
   }
 
