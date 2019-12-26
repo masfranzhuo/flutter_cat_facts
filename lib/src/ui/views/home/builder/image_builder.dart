@@ -27,7 +27,7 @@ class ImageCard extends StatelessWidget {
           ? MediaQuery.of(context).size.height * 0.4
           : sizeHeight;
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(5),
       decoration: boxDecoration(borderRadius: 10),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(5),

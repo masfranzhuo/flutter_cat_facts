@@ -57,30 +57,28 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) => Dialog(
-            child: Center(
-              child: Stack(
-                children: <Widget>[
-                  ImageCard(
-                    imageUrl: imageUrl,
-                    width: width,
-                    height: height,
-                    boxFit: BoxFit.contain,
-                    fullScreen: true,
+            child: Stack(
+              children: <Widget>[
+                ImageCard(
+                  imageUrl: imageUrl,
+                  width: width,
+                  height: height,
+                  boxFit: BoxFit.contain,
+                  fullScreen: true,
+                ),
+                Positioned(
+                  bottom: 12,
+                  right: 12,
+                  child: Button(
+                    icon: Icons.file_download,
+                    onPressed: () {
+                      _handlerDownload(setState, imageUrl);
+                    },
+                    tooltip: 'Download Image',
+                    isLoading: isDownloading,
                   ),
-                  Positioned(
-                    bottom: 12,
-                    right: 12,
-                    child: Button(
-                      icon: Icons.file_download,
-                      onPressed: () {
-                        _handlerDownload(setState, imageUrl);
-                      },
-                      tooltip: 'Download Image',
-                      isLoading: isDownloading,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
