@@ -1,4 +1,4 @@
-package com.example.flutter_cat_facts
+package com.hodiaugames.cat_facts
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
