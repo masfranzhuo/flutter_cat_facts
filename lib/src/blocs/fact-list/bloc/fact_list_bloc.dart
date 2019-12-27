@@ -29,7 +29,9 @@ class FactListBloc extends Bloc<FactListEvent, FactListState> {
       } else {
         final HttpResponse response = await factRepository.fetchFacts();
         facts = response.data;
-        facts = facts.where((item) => item.type == 'cat').toList();
+        facts = facts.where((item) {
+          return item.type == 'cat' && item.text.length > 25;
+        }).toList();
         prefs.setString(
             APP_NAME, jsonEncode(facts.map((item) => item.toJson()).toList()));
       }

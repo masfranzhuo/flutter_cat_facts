@@ -20,14 +20,29 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isDownloading = false;
+  double _valueAnimated = 0;
+  bool _visible = true;
 
   void _handlerShare(String text) {
     Share.share(text, subject: 'Did You Know?');
   }
 
-  void _handlerNext() {
+  void _handlerNext() async {
+    setState(() {
+      _visible = false;
+      _valueAnimated = 50;
+    });
+    await Future.delayed(Duration(milliseconds: 100));
     BlocProvider.of<RandomImageBloc>(context).add(GetRandomImageEvent());
+    await Future.delayed(Duration(milliseconds: 500));
     BlocProvider.of<FactBloc>(context).add(GetFactEvent());
+    setState(() {
+      _valueAnimated = 0;
+    });
+    await Future.delayed(Duration(milliseconds: 400));
+    setState(() {
+      _visible = true;
+    });
   }
 
   void _handlerDownload(Function setState, String imageUrl) async {
@@ -108,32 +123,52 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 BlocBuilder<RandomImageBloc, RandomImageState>(
                   builder: (context, state) {
-                    if (state is LoadedRandomImageState) {
-                      RandomImage randomImage = state?.response?.data;
-                      return GestureDetector(
-                        onTap: () {
-                          _showFulllScreenImageDialog(
-                            imageUrl: randomImage?.url,
-                            width: randomImage?.width?.toDouble(),
-                            height: randomImage?.height?.toDouble(),
-                          );
-                        },
-                        child: ImageCard(
-                          imageUrl: randomImage?.url,
-                          width: randomImage?.width?.toDouble(),
-                          height: randomImage?.height?.toDouble(),
-                        ),
-                      );
-                    } else
-                      return Spinkit();
+                    RandomImage randomImage;
+                    if (state is LoadedRandomImageState)
+                      randomImage = state?.response?.data;
+                    return AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 500),
+                      transitionBuilder:
+                          (Widget child, Animation<double> animation) {
+                        return ScaleTransition(child: child, scale: animation);
+                      },
+                      child: state is LoadedRandomImageState
+                          ? GestureDetector(
+                              onTap: () {
+                                _showFulllScreenImageDialog(
+                                  imageUrl: randomImage?.url,
+                                  width: randomImage?.width?.toDouble(),
+                                  height: randomImage?.height?.toDouble(),
+                                );
+                              },
+                              child: AnimatedSwitcher(
+                                duration: Duration(milliseconds: 500),
+                                transitionBuilder: (Widget child,
+                                    Animation<double> animation) {
+                                  return ScaleTransition(
+                                      child: child, scale: animation);
+                                },
+                                child: ImageCard(
+                                  imageUrl: randomImage?.url,
+                                  width: randomImage?.width?.toDouble(),
+                                  height: randomImage?.height?.toDouble(),
+                                  key: UniqueKey(),
+                                ),
+                              ),
+                            )
+                          : Spinkit(),
+                    );
                   },
                 ),
                 SizedBox(height: 30),
                 Column(
                   children: <Widget>[
                     SizedBox(height: 10),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.easeOutSine,
+                      padding: EdgeInsets.all(16),
+                      margin: EdgeInsets.all(_valueAnimated),
                       decoration: boxDecoration(useBackgroundImage: true),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +192,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           BlocBuilder<FactBloc, FactState>(
                             builder: (context, state) {
                               if (state is LoadedFactState) {
-                                return FactCard(text: state.fact.text);
+                                return AnimatedOpacity(
+                                  duration: Duration(milliseconds: 500),
+                                  opacity: _visible ? 1 : 0,
+                                  child: FactCard(text: state.fact.text),
+                                );
                               } else
                                 return Spinkit();
                             },
