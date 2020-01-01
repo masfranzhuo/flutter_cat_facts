@@ -5,7 +5,9 @@ import 'package:flutter_cat_facts/src/utils/http_response.dart';
 import './bloc.dart';
 
 class RandomImageBloc extends Bloc<RandomImageEvent, RandomImageState> {
-  final randomImageRepository = RandomImageRepository();
+  final RandomImageRepository randomImageRepository;
+
+  RandomImageBloc(this.randomImageRepository);
   
   @override
   RandomImageState get initialState => InitialRandomImageState();

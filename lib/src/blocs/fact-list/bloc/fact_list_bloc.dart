@@ -9,7 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './bloc.dart';
 
 class FactListBloc extends Bloc<FactListEvent, FactListState> {
-  final factRepository = FactRepository();
+  final FactRepository factRepository;
+
+  FactListBloc(this.factRepository);
 
   @override
   FactListState get initialState => InitialFactListState();

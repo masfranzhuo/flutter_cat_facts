@@ -6,7 +6,7 @@ import 'package:flutter_cat_facts/src/models/fact_model.dart';
 import './bloc.dart';
 
 class FactBloc extends Bloc<FactEvent, FactState> {
-  FactListBloc factListBloc = FactListBloc();
+  final FactListBloc factListBloc;
   StreamSubscription factListSubscription;
   Random random = Random();
   List<Fact> _facts;
